@@ -78,3 +78,33 @@ BEGIN
     );
 END;
 $$;
+
+-- 1. Create the audit table
+CREATE TABLE IF NOT EXISTS yield_audit (
+    audit_id SERIAL PRIMARY KEY,
+    record_id INT REFERENCES AgricultureData(record_id) ON DELETE CASCADE,
+    old_yield INT,
+    new_yield INT,
+    change_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Create the trigger function
+CREATE OR REPLACE FUNCTION log_yield_changes()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF OLD.yield IS DISTINCT FROM NEW.yield THEN
+        INSERT INTO yield_audit (record_id, old_yield, new_yield)
+        VALUES (OLD.record_id, OLD.yield, NEW.yield);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 3. Drop the trigger if it already exists
+DROP TRIGGER IF EXISTS yield_update_trigger ON AgricultureData;
+
+-- 4. Create the trigger on the correct table
+CREATE TRIGGER yield_update_trigger
+AFTER UPDATE ON AgricultureData
+FOR EACH ROW
+EXECUTE FUNCTION log_yield_changes();
