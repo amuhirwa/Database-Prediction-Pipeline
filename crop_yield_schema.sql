@@ -108,3 +108,12 @@ CREATE TRIGGER yield_update_trigger
 AFTER UPDATE ON AgricultureData
 FOR EACH ROW
 EXECUTE FUNCTION log_yield_changes();
+
+-- Stores predictions
+CREATE TABLE Predictions (
+    prediction_id SERIAL PRIMARY KEY,
+    record_id INT NOT NULL,
+    predicted_yield FLOAT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (record_id) REFERENCES AgricultureData(record_id) ON DELETE CASCADE
+);
