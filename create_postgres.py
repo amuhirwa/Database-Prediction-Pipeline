@@ -145,6 +145,17 @@ def create_database_structure():
         FOR EACH ROW
         EXECUTE FUNCTION log_yield_changes();
         """)
+
+        # Create predictions table
+        cursor.execute("""
+        CREATE TABLE Predictions (
+        prediction_id SERIAL PRIMARY KEY,
+        record_id INT NOT NULL,
+        predicted_yield FLOAT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (record_id) REFERENCES AgricultureData(record_id) ON DELETE CASCADE
+        );
+        """)
         
         # Commit changes
         conn.commit()
@@ -162,3 +173,4 @@ def create_database_structure():
 
 if __name__ == "__main__":
     create_database_structure()
+    
