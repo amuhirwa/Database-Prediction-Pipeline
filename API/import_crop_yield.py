@@ -13,7 +13,6 @@ PG_CONN_INFO = {
     'sslmode': os.getenv('DB_SSLMODE')
 }
 
-
 MONGO_URI = os.getenv('MONGO_URI')
 CSV_FILE = "yield_df.csv"
 
