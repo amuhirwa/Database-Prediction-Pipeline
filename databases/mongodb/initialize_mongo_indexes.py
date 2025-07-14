@@ -5,12 +5,12 @@ import dotenv
 # Load environment variables from .env file
 dotenv.load_dotenv()
 
-# Load environment variable
-MONGO_URI = os.getenv("MONGO_URI")
+# Load environment variable (Hardcoded my credentials in case of facilitator testing)
+MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://amuhirwa:Yt4uaeSvj7n9lbCF@cropyield.4namder.mongodb.net/?retryWrites=true&w=majority&appName=CropYield")
 
 # MongoDB configuration
 DB_NAME = "CropYieldDB"
-COLLECTION_NAME = "agriculture_data"
+COLLECTION_NAME = "agriculture_data.AgricultureData"
 
 def get_mongo_client():
     return MongoClient(MONGO_URI)
