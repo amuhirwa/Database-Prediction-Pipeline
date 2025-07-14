@@ -1,0 +1,1 @@
+{"_id":{"$oid":"6873d65315ade6fa38ae04a6"},"country_id":{"$oid":"6873d65315ade6fa38ae04a4"},"crop_id":{"$oid":"6873d65315ade6fa38ae04a5"},"year":{"$numberInt":"1990"},"yield":{"$numberInt":"36613"},"rainfall":{"$numberDouble":"1485.0"},"pesticides":{"$numberDouble":"121.0"},"temperature":{"$numberDouble":"16.37"}}
