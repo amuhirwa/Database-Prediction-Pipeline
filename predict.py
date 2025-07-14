@@ -63,3 +63,20 @@ def log_prediction(record_id, predicted_yield):
     if response.status_code != 201:
         raise Exception(f"Failed to log prediction: {response.text}")
     return response.json()
+
+def main():
+    latest_entry = fetch_latest_entry()
+    record_id = latest_entry["record_id"]
+
+    entry_filled = handle_missing_values(latest_entry)
+
+    model, preprocessor = load_model_and_preprocessor()
+    X = prepare_input(entry_filled, preprocessor)
+    prediction = model.predict(X)[0]
+    print(f"Predicted yield: {prediction}")
+
+    result = log_prediction(record_id, prediction)
+    print(f"Prediction logged for record {record_id}: Yield = {prediction}")
+
+if __name__ == "__main__":
+    main()
