@@ -2,7 +2,7 @@ import os
 from pymongo import MongoClient, ASCENDING
 import dotenv
 
-# Load environment variables from .env file
+# Load environment variables from the .env file
 dotenv.load_dotenv()
 
 # Load environment variable
