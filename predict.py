@@ -53,3 +53,13 @@ def prepare_input(entry, preprocessor):
         "year": "Year"
     })
     return preprocessor.transform(df)
+
+def log_prediction(record_id, predicted_yield):
+    payload = {
+        "record_id": record_id,
+        "predicted_yield": predicted_yield
+    }
+    response = requests.post(PREDICTION_API_URL, json=payload)
+    if response.status_code != 201:
+        raise Exception(f"Failed to log prediction: {response.text}")
+    return response.json()
